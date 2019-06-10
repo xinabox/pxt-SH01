@@ -1,0 +1,18 @@
+{
+    "name": "SH01",
+    "version": "1.0.0",
+    "description": "XinaBox SH01 Package for micro:bit. Capacitive Touch (CAP1296).",
+    "license": "MIT",
+    "dependencies": {
+        "core": "*"
+    },
+    "files": [
+        "README.md",
+        "sh01.ts",
+        "_locales/zh/SH01-strings.json"
+    ],
+    "testFiles": [
+        "test.ts"
+    ],
+    "public": true
+}
