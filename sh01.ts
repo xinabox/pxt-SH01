@@ -49,4 +49,5 @@ namespace SH01 {
         }
     }
 
+    read()
 }
