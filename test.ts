@@ -1,46 +1,14 @@
-let touch = 0
+SH01.onKeyPressed(SH01_KEY.KEY_UP, function () {
+    basic.showIcon(IconNames.Heart)
+    basic.showIcon(IconNames.SmallHeart)
+})
+SH01.onKeyReleased(SH01_KEY.KEY_LEFT, function () {
+    basic.showIcon(IconNames.Yes)
+    basic.showIcon(IconNames.No)
+})
 basic.forever(function () {
-    touch = SH01.read()
-    if (touch == 1) {
-        basic.showLeds(`
-            . . . . .
-            . . # . .
-            . # . # .
-            # # # # #
-            . . . . .
-            `)
-    } else if (touch == 2) {
-        basic.showLeds(`
-            # . . . #
-            . # . # .
-            . . # . .
-            . # . # .
-            # . . . #
-            `)
-    } else if (touch == 3) {
-        basic.showLeds(`
-            # # # # #
-            # . . . #
-            # . . . #
-            # . . . #
-            # # # # #
-            `)
-    } else if (touch == 4) {
-        basic.showLeds(`
-            . # # # .
-            # . . . #
-            # . . . #
-            # . . . #
-            . # # # .
-            `)
-    } else {
-        basic.showLeds(`
-            . . . . .
-            . . . . .
-            . . . . .
-            . . . . .
-            . . . . .
-            `)
+    if (SH01.read() == SH01.KEY_CIRCLE()) {
+        basic.showIcon(IconNames.Square)
+        basic.showIcon(IconNames.SmallSquare)
     }
-    basic.pause(100)
 })
