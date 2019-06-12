@@ -29,8 +29,8 @@ namespace SH01 {
     let CAP1296_I2C_ADDRESS = 40
     let REG_MainControl = 0
     let REG_InputStatus = 3
-    let KeyPressed = false
-    let KeyReleased = true
+    let KeyPressed: boolean[] = [false, false, false, false]
+    let KeyReleased: boolean[] = [true, true, true, true]
 
     function setreg(reg: number, dat: number): void {
         let buf = pins.createBuffer(2);
@@ -52,12 +52,12 @@ namespace SH01 {
         control.inBackground(function () {
             while (true) {
                 if (read() == key) {
-                    if (!KeyPressed) {
-                        KeyPressed = true
+                    if (!KeyPressed[key >> 3]) {
+                        KeyPressed[key >> 3] = true
                         body()
                     }
                 }
-                else KeyPressed = false
+                else KeyPressed[key >> 3] = false
                 basic.pause(100)
             }
         })
@@ -71,11 +71,11 @@ namespace SH01 {
         control.inBackground(function () {
             while (true) {
                 if (read() == key) {
-                    KeyReleased = false
+                    KeyReleased[key >> 3] = false
                 }
                 else {
-                    if (!KeyReleased) {
-                        KeyReleased = true
+                    if (!KeyReleased[key >> 3]) {
+                        KeyReleased[key >> 3] = true
                         body()
                     }
                 }
