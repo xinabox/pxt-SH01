@@ -29,8 +29,8 @@ namespace SH01 {
     let CAP1296_I2C_ADDRESS = 40
     let REG_MainControl = 0
     let REG_InputStatus = 3
-    let KeyPressed: boolean[] = [false, false, false, false]
-    let KeyReleased: boolean[] = [true, true, true, true]
+    let KeyPressed: boolean[] = [false, false, false, false, false]
+    let KeyReleased: boolean[] = [true, true, true, true, true]
 
     function setreg(reg: number, dat: number): void {
         let buf = pins.createBuffer(2);
