@@ -9,13 +9,5 @@
     "SH01_KEY.KEY_CIRCLE|block": "圆形",
     "SH01.onKeyPressed|block": "按下 %key 键时",
     "SH01.onKeyReleased|block": "释放 %key 键时",
-    "SH01.KEY_TRI|block": "三角形键",
-    "SH01.KEY_NO|block": "X形键",
-    "SH01.KEY_SQUARE|block": "方形键",
-    "SH01.KEY_CIRCLE|block": "圆形键",
-    "SH01.KEY_UP|block": "上键",
-    "SH01.KEY_DOWN|block": "下键",
-    "SH01.KEY_LEFT|block": "左键",
-    "SH01.KEY_RIGHT|block": "右键",    
-    "SH01.read|block": "读取触摸键"
+    "SH01.keypressed|block": "%key 键被按下"
 }
