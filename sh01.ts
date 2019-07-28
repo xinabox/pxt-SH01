@@ -2,7 +2,7 @@
  * XinaBox SH01 extension for makecode
  */
 
-declare enum SH01_KEY {
+enum SH01_KEY {
     //% block="UP"
     KEY_UP = 1,
     //% block="DOWN"
@@ -12,7 +12,7 @@ declare enum SH01_KEY {
     //% block="RIGHT"
     KEY_RIGHT = 32,
     //% block="TRIANGLE"
-    KEY_TRI = 1,
+    KEY_TRIANGLE = 1,
     //% block="NO"
     KEY_NO = 8,
     //% block="SQUARE"
@@ -26,14 +26,18 @@ declare enum SH01_KEY {
  */
 //% weight=100 color=#70c0f0 icon="\uf0a7" block="SH01"
 namespace SH01 {
-    let CAP1296_I2C_ADDRESS = 40
-    let REG_MainControl = 0
-    let REG_InputStatus = 3
-    let KeyPressed: boolean[] = [false, false, false, false, false]
-    let KeyReleased: boolean[] = [true, true, true, true, true]
+
+    const CAP1296_I2C_ADDRESS = 40
+    const REG_MainControl = 0
+    const REG_InputStatus = 3
+    const _interval = 100
+
+    let KeyPressed: boolean[] = [false, false, false, false, false, false, false, false]
+    let KeyReleased: boolean[] = [true, true, true, true, true, true, true, true]
+    let buf = pins.createBuffer(2)
+    let rk: number = 0
 
     function setreg(reg: number, dat: number): void {
-        let buf = pins.createBuffer(2);
         buf[0] = reg;
         buf[1] = dat;
         pins.i2cWriteBuffer(CAP1296_I2C_ADDRESS, buf);
@@ -44,6 +48,19 @@ namespace SH01 {
         return pins.i2cReadNumber(CAP1296_I2C_ADDRESS, NumberFormat.UInt8BE);
     }
 
+    // read touch key interval
+    function _readkey(): void {
+        control.inBackground(function () {
+            while (true) {
+                rk = getreg(REG_InputStatus)
+                if (rk > 0) {
+                    setreg(REG_MainControl, 0)
+                }
+                basic.pause(_interval)
+            }
+        })
+    }
+
     /**
      * Key Pressed Event
      */
@@ -51,14 +68,16 @@ namespace SH01 {
     export function onKeyPressed(key: SH01_KEY, body: () => void): void {
         control.inBackground(function () {
             while (true) {
-                if (read() == key) {
-                    if (!KeyPressed[key >> 3]) {
-                        KeyPressed[key >> 3] = true
-                        body()
+                if (rk <= 32) {
+                    if (rk == key) {
+                        if (KeyPressed[key >> 3] == false) {
+                            KeyPressed[key >> 3] = true
+                            body()
+                        }
                     }
+                    else KeyPressed[key >> 3] = false
                 }
-                else KeyPressed[key >> 3] = false
-                basic.pause(100)
+                basic.pause(_interval)
             }
         })
     }
@@ -70,98 +89,29 @@ namespace SH01 {
     export function onKeyReleased(key: SH01_KEY, body: () => void): void {
         control.inBackground(function () {
             while (true) {
-                if (read() == key) {
-                    KeyReleased[key >> 3] = false
-                }
-                else {
-                    if (!KeyReleased[key >> 3]) {
-                        KeyReleased[key >> 3] = true
-                        body()
+                if (rk <= 32) {
+                    if (rk == key) {
+                        KeyReleased[key >> 3] = false
+                    }
+                    else {
+                        if (KeyReleased[key >> 3] == false) {
+                            KeyReleased[key >> 3] = true
+                            body()
+                        }
                     }
                 }
-                basic.pause(100)
+                basic.pause(_interval)
             }
         })
     }
 
     /**
-     * TRIANGLE KEY
+     * 
      */
-    //% block="TRIANGLE" advanced=true
-    export function KEY_TRI(): SH01_KEY {
-        return SH01_KEY.KEY_UP
+    //% block
+    export function presskey(key: SH01_KEY): boolean {
+        return rk == key
     }
 
-    /**
-     * NO KEY
-     */
-    //% block="NO" advanced=true
-    export function KEY_NO(): SH01_KEY {
-        return SH01_KEY.KEY_DOWN
-    }
-
-    /**
-     * SQUARE KEY
-     */
-    //% block="SQUARE" advanced=true
-    export function KEY_SQUARE(): SH01_KEY {
-        return SH01_KEY.KEY_LEFT
-    }
-
-    /**
-     * CIRCLE KEY
-     */
-    //% block="CIRCLE" advanced=true
-    export function KEY_CIRCLE(): SH01_KEY {
-        return SH01_KEY.KEY_RIGHT
-    }
-
-    /**
-     * UP KEY
-     */
-    //% block="UP" advanced=true
-    export function KEY_UP(): SH01_KEY {
-        return SH01_KEY.KEY_UP
-    }
-
-    /**
-     * DOWN KEY
-     */
-    //% block="DOWN" advanced=true
-    export function KEY_DOWN(): SH01_KEY {
-        return SH01_KEY.KEY_DOWN
-    }
-
-    /**
-     * LEFT KEY
-     */
-    //% block="LEFT" advanced=true
-    export function KEY_LEFT(): SH01_KEY {
-        return SH01_KEY.KEY_LEFT
-    }
-
-    /**
-     * RIGHT KEY
-     */
-    //% block="RIGHT" advanced=true
-    export function KEY_RIGHT(): SH01_KEY {
-        return SH01_KEY.KEY_RIGHT
-    }
-
-    /**
-     * read touch key, if a touch key pressed, return 1-4.
-     * If no touch key pressed, return 0.
-     */
-    //% block="Read Touch"
-    //% weight=80
-    export function read(): SH01_KEY {
-        let t = getreg(REG_InputStatus)
-
-        if (t > 0) {
-            setreg(REG_MainControl, 0)
-        }
-        return t
-    }
-
-    read()
+    _readkey()
 }
