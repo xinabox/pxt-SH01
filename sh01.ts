@@ -106,9 +106,9 @@ namespace SH01 {
     }
 
     /**
-     * 
+     * Key Released Event
      */
-    //% block
+    //% block="Key Released %key"
     export function presskey(key: SH01_KEY): boolean {
         return rk == key
     }
