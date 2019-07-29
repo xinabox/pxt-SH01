@@ -106,9 +106,9 @@ namespace SH01 {
     }
 
     /**
-     * Key Released Event
+     * If one key has been pressed.
      */
-    //% block="Key Released %key"
+    //% block="%key has been pressed"
     export function keypressed(key: SH01_KEY): boolean {
         return rk == key
     }
