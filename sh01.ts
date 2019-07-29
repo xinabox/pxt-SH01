@@ -64,7 +64,7 @@ namespace SH01 {
     /**
      * Key Pressed Event
      */
-    //% block="Key Pressed %key"
+    //% block="on %key Key Pressed"
     export function onKeyPressed(key: SH01_KEY, body: () => void): void {
         control.inBackground(function () {
             while (true) {
@@ -85,7 +85,7 @@ namespace SH01 {
     /**
      * Key Released Event
      */
-    //% block="Key Released %key"
+    //% block="on %key Key Released"
     export function onKeyReleased(key: SH01_KEY, body: () => void): void {
         control.inBackground(function () {
             while (true) {
