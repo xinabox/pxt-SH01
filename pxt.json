@@ -1,7 +1,11 @@
 {
     "name": "SH01",
     "version": "1.0.5",
-    "description": "XinaBox SH01 Package for micro:bit. Capacitive Touch (CAP1296).",
+    "description": "XinaBox SH01 capacitive touch sensor: 4 button",
+    "authors": [
+        "Bjarke Gotfredsen",
+        "Shao Ziyang"
+    ],
     "license": "MIT",
     "dependencies": {
         "core": "*"
