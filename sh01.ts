@@ -32,17 +32,20 @@ namespace SH01 {
     const REG_InputStatus = 3
     const _interval = 100
 
-    let kpressed: boolean = false
-    let kreleased: boolean = false
+
     //let KeyPressed: boolean[] = [false, false, false, false, false, false, false, false]
     //let KeyReleased: boolean[] = [true, true, true, true, true, true, true, true]
-    let buf = pins.createBuffer(2)
+
+    let KeyPressed: boolean[] = [false, false, false, false]
+    let KeyReleased: boolean[] = [true, true, true, true]
+    //let buf = pins.createBuffer(2)
     let rk: number = 0
 
     function setreg(reg: number, dat: number): void {
-        buf[0] = reg;
-        buf[1] = dat;
-        pins.i2cWriteBuffer(CAP1296_I2C_ADDRESS, buf);
+        //buf[0] = reg;
+        //buf[1] = dat;
+        //pins.i2cWriteBuffer(CAP1296_I2C_ADDRESS, buf);
+        pins.i2cWriteNumber(CAP1296_I2C_ADDRESS, (reg<<8)+dat, NumberFormat.Int8LE);
     }
 
     function getreg(reg: number): number {
@@ -70,20 +73,16 @@ namespace SH01 {
     export function onKeyPressed(key: SH01_KEY, body: () => void): void {
         control.inBackground(function () {
             while (true) {
-                //if (rk <= 32) {
+                if (rk <= 32) {
                     if (rk == key) {
-                        //if (KeyPressed[key >> 3] == false) {
-                        //    KeyPressed[key >> 3] = true
-                        //    body()
-                        //}
-                        if (!kpressed) {
-                            kpressed = true
+                        if (KeyPressed[key >> 3] == false) {
+                            KeyPressed[key >> 3] = true
                             body()
                         }
+
                     } 
-                    else kpressed = false
-                    //else KeyPressed[key >> 3] = false
-                //}
+                    else KeyPressed[key >> 3] = false
+                }
                 basic.pause(_interval)
             }
         })
@@ -98,16 +97,11 @@ namespace SH01 {
             while (true) {
                 if (rk <= 32) {
                     if (rk == key) {
-                        kreleased = false
-                        //KeyReleased[key >> 3] = false
+                        KeyReleased[key >> 3] = false
                     }
                     else {
-                        //if (KeyReleased[key >> 3] == false) {
-                        //    KeyReleased[key >> 3] = true
-                        //    body()
-                        //}
-                        if (!kreleased) {
-                            kreleased = true
+                        if (KeyReleased[key >> 3] == false) {
+                            KeyReleased[key >> 3] = true
                             body()
                         }
                     }
