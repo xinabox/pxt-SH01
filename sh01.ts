@@ -34,14 +34,14 @@ namespace SH01 {
 
     let KeyPressed: boolean[] = [false, false, false, false, false, false, false, false]
     let KeyReleased: boolean[] = [true, true, true, true, true, true, true, true]
-    let buf = pins.createBuffer(2)
+    //let buf = pins.createBuffer(2)
     let rk: number = 0
 
     function setreg(reg: number, dat: number): void {
-        buf[0] = reg;
-        buf[1] = dat;
-        pins.i2cWriteBuffer(CAP1296_I2C_ADDRESS, buf);
-        //pins.i2cWriteNumber(CAP1296_I2C_ADDRESS, (reg<<8)+dat, NumberFormat.Int8LE);
+        //buf[0] = reg;
+        //buf[1] = dat;
+        //pins.i2cWriteBuffer(CAP1296_I2C_ADDRESS, buf);
+        pins.i2cWriteNumber(CAP1296_I2C_ADDRESS, (reg<<8)+dat, NumberFormat.UInt16BE);
     }
 
     function getreg(reg: number): number {
