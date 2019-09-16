@@ -33,11 +33,8 @@ namespace SH01 {
     const _interval = 100
 
 
-    //let KeyPressed: boolean[] = [false, false, false, false, false, false, false, false]
-    //let KeyReleased: boolean[] = [true, true, true, true, true, true, true, true]
-
-    let KeyPressed: boolean[] = [false, false, false, false]
-    let KeyReleased: boolean[] = [true, true, true, true]
+    let KeyPressed: boolean[] = [false, false, false, false, false, false, false, false]
+    let KeyReleased: boolean[] = [true, true, true, true, true, true, true, true]
     //let buf = pins.createBuffer(2)
     let rk: number = 0
 
