@@ -32,8 +32,10 @@ namespace SH01 {
     const REG_InputStatus = 3
     const _interval = 100
 
-    let KeyPressed: boolean[] = [false, false, false, false, false, false, false, false]
-    let KeyReleased: boolean[] = [true, true, true, true, true, true, true, true]
+    let kpressed: boolean = false
+    let kreleased: boolean = false
+    //let KeyPressed: boolean[] = [false, false, false, false, false, false, false, false]
+    //let KeyReleased: boolean[] = [true, true, true, true, true, true, true, true]
     let buf = pins.createBuffer(2)
     let rk: number = 0
 
@@ -68,15 +70,20 @@ namespace SH01 {
     export function onKeyPressed(key: SH01_KEY, body: () => void): void {
         control.inBackground(function () {
             while (true) {
-                if (rk <= 32) {
+                //if (rk <= 32) {
                     if (rk == key) {
-                        if (KeyPressed[key >> 3] == false) {
-                            KeyPressed[key >> 3] = true
+                        //if (KeyPressed[key >> 3] == false) {
+                        //    KeyPressed[key >> 3] = true
+                        //    body()
+                        //}
+                        if (!kpressed) {
+                            kpressed = true
                             body()
                         }
-                    }
-                    else KeyPressed[key >> 3] = false
-                }
+                    } 
+                    else kpressed = false
+                    //else KeyPressed[key >> 3] = false
+                //}
                 basic.pause(_interval)
             }
         })
@@ -91,11 +98,16 @@ namespace SH01 {
             while (true) {
                 if (rk <= 32) {
                     if (rk == key) {
-                        KeyReleased[key >> 3] = false
+                        kreleased = false
+                        //KeyReleased[key >> 3] = false
                     }
                     else {
-                        if (KeyReleased[key >> 3] == false) {
-                            KeyReleased[key >> 3] = true
+                        //if (KeyReleased[key >> 3] == false) {
+                        //    KeyReleased[key >> 3] = true
+                        //    body()
+                        //}
+                        if (!kreleased) {
+                            kreleased = true
                             body()
                         }
                     }
