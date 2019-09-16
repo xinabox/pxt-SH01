@@ -24,7 +24,7 @@ enum SH01_KEY {
 /**
  * SH01 block
  */
-//% weight=100 color=#70c0f0 icon="\uf0a7" block="SH01"
+//% weight=100 color=#444444 icon="\uf0a7" block="SH01"
 namespace SH01 {
 
     const CAP1296_I2C_ADDRESS = 40
@@ -64,7 +64,7 @@ namespace SH01 {
     /**
      * Key Pressed Event
      */
-    //% block="on %key Key Pressed"
+    //% block="SH01 on %key Key Pressed"
     export function onKeyPressed(key: SH01_KEY, body: () => void): void {
         control.inBackground(function () {
             while (true) {
@@ -85,7 +85,7 @@ namespace SH01 {
     /**
      * Key Released Event
      */
-    //% block="on %key Key Released"
+    //% block="SH01 on %key Key Released"
     export function onKeyReleased(key: SH01_KEY, body: () => void): void {
         control.inBackground(function () {
             while (true) {
@@ -108,7 +108,7 @@ namespace SH01 {
     /**
      * If one key has been pressed.
      */
-    //% block="%key has been pressed"
+    //% block="SH01 %key has been pressed"
     export function keypressed(key: SH01_KEY): boolean {
         return rk == key
     }
