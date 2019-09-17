@@ -84,14 +84,14 @@ namespace SH01 {
                 basic.pause(_interval)
             }
         }) */
-        control.onEvent(keyPressEventID, body);
+        control.onEvent(keyPressEventID, rk,body);
         control.inBackground(function () {
             while (true) {
                 if (rk <= 32) {
                     if (rk == key) {
                         if (KeyPressed[key >> 3] == false) {
                             KeyPressed[key >> 3] = true
-                            control.raiseEvent(keyPressEventID);
+                            control.raiseEvent(keyPressEventID,rk);
                         }
                     }
                     else KeyPressed[key >> 3] = false
@@ -123,7 +123,7 @@ namespace SH01 {
                 basic.pause(_interval)
             }
         }) */
-        control.onEvent(keyReleaseEventID,body);
+        control.onEvent(keyReleaseEventID,rk,body);
         control.inBackground(() => {
             while (true) {
                 if (rk <= 32) {
@@ -133,7 +133,7 @@ namespace SH01 {
                     else {
                         if (KeyReleased[key >> 3] == false) {
                             KeyReleased[key >> 3] = true
-                            control.raiseEvent(keyReleaseEventID);
+                            control.raiseEvent(keyReleaseEventID,rk);
                         }
                     }
                 }
