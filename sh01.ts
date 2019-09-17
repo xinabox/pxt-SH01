@@ -27,6 +27,8 @@ enum SH01_KEY {
 //% weight=100 color=#444444 icon="\uf0a7" block="SH01"
 namespace SH01 {
 
+    const keyPressEventID = 3101;
+    const keyReleaseEventID = 3101;
     const CAP1296_I2C_ADDRESS = 40
     const REG_MainControl = 0
     const REG_InputStatus = 3
@@ -67,6 +69,7 @@ namespace SH01 {
      */
     //% block="SH01 on %key Key Pressed"
     export function onKeyPressed(key: SH01_KEY, body: () => void): void {
+        /*
         control.inBackground(function () {
             while (true) {
                 if (rk <= 32) {
@@ -80,6 +83,21 @@ namespace SH01 {
                 }
                 basic.pause(_interval)
             }
+        }) */
+        control.onEvent(keyPressEventID, body);
+        control.inBackground(function () {
+            while (true) {
+                if (rk <= 32) {
+                    if (rk == key) {
+                        if (KeyPressed[key >> 3] == false) {
+                            KeyPressed[key >> 3] = true
+                            control.raiseEvent(keyPressEventID);
+                        }
+                    }
+                    else KeyPressed[key >> 3] = false
+                }
+                basic.pause(_interval)
+            }
         })
     }
 
@@ -88,6 +106,7 @@ namespace SH01 {
      */
     //% block="SH01 on %key Key Released"
     export function onKeyReleased(key: SH01_KEY, body: () => void): void {
+        /*
         control.inBackground(function () {
             while (true) {
                 if (rk <= 32) {
@@ -98,6 +117,23 @@ namespace SH01 {
                         if (KeyReleased[key >> 3] == false) {
                             KeyReleased[key >> 3] = true
                             body()
+                        }
+                    }
+                }
+                basic.pause(_interval)
+            }
+        }) */
+        control.onEvent(keyReleaseEventID,body);
+        control.inBackground(() => {
+            while (true) {
+                if (rk <= 32) {
+                    if (rk == key) {
+                        KeyReleased[key >> 3] = false
+                    }
+                    else {
+                        if (KeyReleased[key >> 3] == false) {
+                            KeyReleased[key >> 3] = true
+                            control.raiseEvent(keyReleaseEventID);
                         }
                     }
                 }
