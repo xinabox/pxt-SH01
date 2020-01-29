@@ -33,7 +33,7 @@ namespace SH01 {
     const REG_MainControl = 0
     const REG_InputStatus = 3
     const _interval = 100
-    let enable: boolean = true
+    let enable: boolean = false
 
     let KeyPressed: boolean[] = [false, false, false, false, false, false, false, false]
     let KeyReleased: boolean[] = [true, true, true, true, true, true, true, true]
@@ -95,7 +95,8 @@ namespace SH01 {
      */
     //% block="SH01 on %key Key Pressed"
     export function onKeyPressed(key: SH01_KEY, body: () => void): void {
-        if ((key == SH01_KEY.KEY_TRIANGLE) && (enable == true)) {
+        if ((key == SH01_KEY.KEY_TRIANGLE)) {
+            basic.showString(enable.toString())
             control.onEvent(7, 0, body)
         } else if ((key == SH01_KEY.KEY_CIRCLE)) {
             control.onEvent(8, 0, body)
