@@ -86,6 +86,8 @@ namespace SH01 {
             enable = true
             control.raiseEvent(10, 0)
         }
+
+        console.log(enable.toString())
     }
 
     /**
