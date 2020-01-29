@@ -33,6 +33,7 @@ namespace SH01 {
     const REG_MainControl = 0
     const REG_InputStatus = 3
     const _interval = 100
+    let enable: boolean = false
 
     let KeyPressed: boolean[] = [false, false, false, false, false, false, false, false]
     let KeyReleased: boolean[] = [true, true, true, true, true, true, true, true]
@@ -65,22 +66,25 @@ namespace SH01 {
             let main_reg: number = getreg(0x00)
             setreg(REG_MainControl, main_reg & ~0x01)
             control.raiseEvent(7, 0)
+            enable = true
         } else if (rk & 0x20) {
             // Circle
             let main_reg: number = getreg(0x00)
             setreg(REG_MainControl, main_reg & ~0x01)
             control.raiseEvent(8, 0)
-            rk = 0x00;
+            enable = true
         } else if (rk & 0x10) {
             // Square
             let main_reg: number = getreg(0x00)
             setreg(REG_MainControl, main_reg & ~0x01)
             control.raiseEvent(9, 0)
+            enable = true
         } else if (rk & 0x08) {
             // Cross
             let main_reg: number = getreg(0x00)
             setreg(REG_MainControl, main_reg & ~0x01)
             control.raiseEvent(10, 0)
+            enable = true
         }
     }
 
@@ -89,14 +93,18 @@ namespace SH01 {
      */
     //% block="SH01 on %key Key Pressed"
     export function onKeyPressed(key: SH01_KEY, body: () => void): void {
-        if (key == SH01_KEY.KEY_TRIANGLE) {
+        if (key == SH01_KEY.KEY_TRIANGLE && enable) {
             control.onEvent(7, 0, body)
-        } else if (key == SH01_KEY.KEY_CIRCLE) {
+            enable = false
+        } else if (key == SH01_KEY.KEY_CIRCLE && enable) {
             control.onEvent(8, 0, body)
-        } else if (key == SH01_KEY.KEY_SQUARE) {
+            enable = false
+        } else if (key == SH01_KEY.KEY_SQUARE && enable) {
             control.onEvent(9, 0, body)
-        } else if (key == SH01_KEY.KEY_NO) {
+            enable = false
+        } else if (key == SH01_KEY.KEY_NO && enable) {
             control.onEvent(10, 0, body)
+            enable = false
         }
     }
 
