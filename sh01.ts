@@ -33,7 +33,7 @@ namespace SH01 {
     const REG_MainControl = 0
     const REG_InputStatus = 3
     const _interval = 100
-    let enable: boolean = false
+    let tri_enable: boolean = false
 
     let KeyPressed: boolean[] = [false, false, false, false, false, false, false, false]
     let KeyReleased: boolean[] = [true, true, true, true, true, true, true, true]
@@ -65,45 +65,40 @@ namespace SH01 {
             // Triangle
             let main_reg: number = getreg(0x00)
             setreg(REG_MainControl, main_reg & ~0x01)
-            enable = true
-            control.raiseEvent(1103, 2)
+            tri_enable = true
         } else if (rk & 0x20) {
             // Circle
             let main_reg: number = getreg(0x00)
             setreg(REG_MainControl, main_reg & ~0x01)
-            enable = true
-            control.raiseEvent(8, 0)
         } else if (rk & 0x10) {
             // Square
             let main_reg: number = getreg(0x00)
             setreg(REG_MainControl, main_reg & ~0x01)
-            enable = true
-            control.raiseEvent(9, 0)
         } else if (rk & 0x08) {
             // Cross
             let main_reg: number = getreg(0x00)
             setreg(REG_MainControl, main_reg & ~0x01)
-            enable = true
-            control.raiseEvent(10, 0)
         }
 
-        console.log(enable.toString())
     }
 
     /**
-     * Key Pressed Event
+     * Triangle pressed
      */
-    //% block="SH01 on %key Key Pressed"
-    export function onKeyPressed(key: SH01_KEY, body: () => void): void {
-        if ((key == SH01_KEY.KEY_TRIANGLE)) {
-            control.onEvent(1103, 2, body)
-        } else if ((key == SH01_KEY.KEY_CIRCLE)) {
-            control.onEvent(8, 0, body)
-        } else if ((key == SH01_KEY.KEY_SQUARE)) {
-            control.onEvent(9, 0, body)
-        } else if ((key == SH01_KEY.KEY_NO)) {
-            control.onEvent(10, 0, body)
+    //% block="SH01 is triangle pressed"
+    export function tri_pressed():boolean{
+        let tri_press: boolean = false
+
+        if(tri_enable)
+        {
+            tri_press = true
+            tri_enable = false
         }
+        else{
+            tri_press = false
+        }
+        
+        return tri_press
     }
 
     /**
