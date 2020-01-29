@@ -58,16 +58,17 @@ namespace SH01 {
     export function poll_sh01(): void {
         rk = getreg(REG_InputStatus)
 
-        if (rk == 0x01) {
+        if (rk & 0x01) {
             // Triangle
             control.raiseEvent(7, 0)
-        } else if (rk == 0x20) {
+        } else if (rk & 0x20) {
             // Circle
             control.raiseEvent(8, 0)
-        } else if (rk == 0x10) {
+            rk = 0x00;
+        } else if (rk & 0x10) {
             // Square
             control.raiseEvent(9, 0)
-        } else if (rk == 0x08) {
+        } else if (rk & 0x08) {
             // Cross
             control.raiseEvent(10, 0)
         }
@@ -78,10 +79,9 @@ namespace SH01 {
      */
     //% block="SH01 on %key Key Pressed"
     export function onKeyPressed(key: SH01_KEY, body: () => void): void {
-        if(key == SH01_KEY.KEY_TRIANGLE)
-        {
+        if (key == SH01_KEY.KEY_TRIANGLE) {
             control.onEvent(7, 0, body)
-        }else if(key == SH01_KEY.KEY_CIRCLE) {
+        } else if (key == SH01_KEY.KEY_CIRCLE) {
             control.onEvent(8, 0, body)
         } else if (key == SH01_KEY.KEY_SQUARE) {
             control.onEvent(9, 0, body)
