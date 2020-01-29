@@ -19,5 +19,5 @@
         "test.ts"
     ],
     "public": true,
-	"preferredEditor": "blocksprj"
+    "preferredEditor": "tsprj"
 }

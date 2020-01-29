@@ -51,17 +51,28 @@ namespace SH01 {
         return pins.i2cReadNumber(CAP1296_I2C_ADDRESS, NumberFormat.UInt8BE);
     }
 
-    // read touch key interval
-    function _readkey(): void {
-        control.inBackground(function () {
-            while (true) {
-                rk = getreg(REG_InputStatus)
-                if (rk > 0) {
-                    setreg(REG_MainControl, 0)
-                }
-                basic.pause(_interval)
-            }
-        })
+    /**
+     * Poll SH01
+     */
+    //% block="SH01 poll"
+    function poll_sh01(): void {
+        rk = getreg(REG_InputStatus)
+
+        if(rk == 0x01)
+        {
+            // Triangle
+
+        }else if(rk == 0x20)
+        {
+            // Circle
+
+        }else if(rk == 0x10){
+            // Square
+
+        }else if(rk == 0x08)
+        {
+            // Cross
+        }
     }
 
     /**
@@ -149,6 +160,4 @@ namespace SH01 {
     export function keypressed(key: SH01_KEY): boolean {
         return rk == key
     }
-
-    _readkey()
 }
