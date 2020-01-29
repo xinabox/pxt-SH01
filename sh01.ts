@@ -43,7 +43,7 @@ namespace SH01 {
         //buf[0] = reg;
         //buf[1] = dat;
         //pins.i2cWriteBuffer(CAP1296_I2C_ADDRESS, buf);
-        pins.i2cWriteNumber(CAP1296_I2C_ADDRESS, (reg<<8)+dat, NumberFormat.UInt16BE);
+        pins.i2cWriteNumber(CAP1296_I2C_ADDRESS, (reg << 8) + dat, NumberFormat.UInt16BE);
     }
 
     function getreg(reg: number): number {
@@ -58,20 +58,18 @@ namespace SH01 {
     function poll_sh01(): void {
         rk = getreg(REG_InputStatus)
 
-        if(rk == 0x01)
-        {
+        if (rk == 0x01) {
             // Triangle
-
-        }else if(rk == 0x20)
-        {
+            control.raiseEvent(7, 0)
+        } else if (rk == 0x20) {
             // Circle
-
-        }else if(rk == 0x10){
+            control.raiseEvent(8, 0)
+        } else if (rk == 0x10) {
             // Square
-
-        }else if(rk == 0x08)
-        {
+            control.raiseEvent(9, 0)
+        } else if (rk == 0x08) {
             // Cross
+            control.raiseEvent(10, 0)
         }
     }
 
@@ -80,36 +78,16 @@ namespace SH01 {
      */
     //% block="SH01 on %key Key Pressed"
     export function onKeyPressed(key: SH01_KEY, body: () => void): void {
-        /*
-        control.inBackground(function () {
-            while (true) {
-                if (rk <= 32) {
-                    if (rk == key) {
-                        if (KeyPressed[key >> 3] == false) {
-                            KeyPressed[key >> 3] = true
-                            body()
-                        }
-                    } 
-                    else KeyPressed[key >> 3] = false
-                }
-                basic.pause(_interval)
-            }
-        }) */
-        control.onEvent(keyPressEventID, key,body);
-        control.inBackground(function () {
-            while (true) {
-                if (rk <= 32) {
-                    if (rk == key) {
-                        if (KeyPressed[key >> 3] == false) {
-                            KeyPressed[key >> 3] = true
-                            control.raiseEvent(keyPressEventID,key);
-                        }
-                    }
-                    else KeyPressed[key >> 3] = false
-                }
-                basic.pause(_interval)
-            }
-        })
+        if(key == SH01_KEY.KEY_TRIANGLE)
+        {
+            control.onEvent(7, 0, body)
+        }else if(key == SH01_KEY.KEY_CIRCLE) {
+            control.onEvent(8, 0, body)
+        } else if (key == SH01_KEY.KEY_SQUARE) {
+            control.onEvent(9, 0, body)
+        } else if (key == SH01_KEY.KEY_NO) {
+            control.onEvent(10, 0, body)
+        }
     }
 
     /**
@@ -134,7 +112,7 @@ namespace SH01 {
                 basic.pause(_interval)
             }
         }) */
-        control.onEvent(keyReleaseEventID,key,body);
+        control.onEvent(keyReleaseEventID, key, body);
         control.inBackground(() => {
             while (true) {
                 if (rk <= 32) {
@@ -144,7 +122,7 @@ namespace SH01 {
                     else {
                         if (KeyReleased[key >> 3] == false) {
                             KeyReleased[key >> 3] = true
-                            control.raiseEvent(keyReleaseEventID,key);
+                            control.raiseEvent(keyReleaseEventID, key);
                         }
                     }
                 }
