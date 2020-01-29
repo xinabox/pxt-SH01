@@ -1,3 +1,4 @@
+/*
 SH01.onKeyPressed(SH01_KEY.KEY_UP, function () {
     basic.showIcon(IconNames.Heart)
     basic.showIcon(IconNames.SmallHeart)
@@ -12,3 +13,4 @@ basic.forever(function () {
         basic.showIcon(IconNames.SmallSquare)
     }
 })
+*/
