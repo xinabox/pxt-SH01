@@ -33,7 +33,7 @@ namespace SH01 {
     const REG_MainControl = 0
     const REG_InputStatus = 3
     const _interval = 100
-    let enable: boolean = false
+    let enable: boolean = true
 
     let KeyPressed: boolean[] = [false, false, false, false, false, false, false, false]
     let KeyReleased: boolean[] = [true, true, true, true, true, true, true, true]
