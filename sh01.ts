@@ -55,7 +55,7 @@ namespace SH01 {
      * Poll SH01
      */
     //% block="SH01 poll"
-    function poll_sh01(): void {
+    export function poll_sh01(): void {
         rk = getreg(REG_InputStatus)
 
         if (rk == 0x01) {
