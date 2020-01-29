@@ -96,13 +96,12 @@ namespace SH01 {
     //% block="SH01 on %key Key Pressed"
     export function onKeyPressed(key: SH01_KEY, body: () => void): void {
         if (key == SH01_KEY.KEY_TRIANGLE) {
-            console.log("Clicked")
             control.onEvent(7, 0, body)
-        } else if ((key == SH01_KEY.KEY_CIRCLE) && enable) {
+        } else if ((key == SH01_KEY.KEY_CIRCLE)) {
             control.onEvent(8, 0, body)
-        } else if ((key == SH01_KEY.KEY_SQUARE) && enable) {
+        } else if ((key == SH01_KEY.KEY_SQUARE)) {
             control.onEvent(9, 0, body)
-        } else if ((key == SH01_KEY.KEY_NO) && enable) {
+        } else if ((key == SH01_KEY.KEY_NO)) {
             control.onEvent(10, 0, body)
         }
     }
