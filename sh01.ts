@@ -66,7 +66,7 @@ namespace SH01 {
             let main_reg: number = getreg(0x00)
             setreg(REG_MainControl, main_reg & ~0x01)
             enable = true
-            control.raiseEvent(7, 0)
+            control.raiseEvent(1103, 2)
         } else if (rk & 0x20) {
             // Circle
             let main_reg: number = getreg(0x00)
@@ -96,8 +96,7 @@ namespace SH01 {
     //% block="SH01 on %key Key Pressed"
     export function onKeyPressed(key: SH01_KEY, body: () => void): void {
         if ((key == SH01_KEY.KEY_TRIANGLE)) {
-            basic.showString(enable.toString())
-            control.onEvent(7, 0, body)
+            control.onEvent(1103, 2, body)
         } else if ((key == SH01_KEY.KEY_CIRCLE)) {
             control.onEvent(8, 0, body)
         } else if ((key == SH01_KEY.KEY_SQUARE)) {
