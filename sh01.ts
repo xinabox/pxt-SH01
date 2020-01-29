@@ -95,7 +95,6 @@ namespace SH01 {
     export function onKeyPressed(key: SH01_KEY, body: () => void): void {
         if ((key == SH01_KEY.KEY_TRIANGLE) && enable) {
             control.onEvent(7, 0, body)
-            enable = false
         } else if ((key == SH01_KEY.KEY_CIRCLE) && enable) {
             control.onEvent(8, 0, body)
             enable = false
