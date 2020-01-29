@@ -65,26 +65,26 @@ namespace SH01 {
             // Triangle
             let main_reg: number = getreg(0x00)
             setreg(REG_MainControl, main_reg & ~0x01)
-            control.raiseEvent(7, 0)
             enable = true
+            control.raiseEvent(7, 0)
         } else if (rk & 0x20) {
             // Circle
             let main_reg: number = getreg(0x00)
             setreg(REG_MainControl, main_reg & ~0x01)
-            control.raiseEvent(8, 0)
             enable = true
+            control.raiseEvent(8, 0)
         } else if (rk & 0x10) {
             // Square
             let main_reg: number = getreg(0x00)
             setreg(REG_MainControl, main_reg & ~0x01)
-            control.raiseEvent(9, 0)
             enable = true
+            control.raiseEvent(9, 0)
         } else if (rk & 0x08) {
             // Cross
             let main_reg: number = getreg(0x00)
             setreg(REG_MainControl, main_reg & ~0x01)
-            control.raiseEvent(10, 0)
             enable = true
+            control.raiseEvent(10, 0)
         }
     }
 
