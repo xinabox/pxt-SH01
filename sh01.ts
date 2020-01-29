@@ -97,13 +97,10 @@ namespace SH01 {
             control.onEvent(7, 0, body)
         } else if ((key == SH01_KEY.KEY_CIRCLE) && enable) {
             control.onEvent(8, 0, body)
-            enable = false
         } else if ((key == SH01_KEY.KEY_SQUARE) && enable) {
             control.onEvent(9, 0, body)
-            enable = false
         } else if ((key == SH01_KEY.KEY_NO) && enable) {
             control.onEvent(10, 0, body)
-            enable = false
         }
     }
 
