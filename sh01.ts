@@ -71,7 +71,6 @@ namespace SH01 {
                 setreg(REG_MainControl, main_reg & ~0x01)
                 console.logValue("rk", getreg(REG_InputStatus))
             }
-            basic.pause(5000)
             tri_enable = true
         } else if (rk & 0x20) {
             // Circle
