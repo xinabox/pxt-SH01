@@ -70,7 +70,7 @@ namespace SH01 {
                 let main_reg: number = getreg(0x00)
                 setreg(REG_MainControl, main_reg & ~0x01)
                 console.logValue("rk", getreg(REG_InputStatus))
-                basic.pause(1000)
+                basic.pause(100)
             }
             basic.pause(5000)
             tri_enable = true
