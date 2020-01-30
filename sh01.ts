@@ -66,6 +66,7 @@ namespace SH01 {
             // Triangle
             let main_reg: number = getreg(0x00)
             setreg(REG_MainControl, main_reg & ~0x01)
+            rk = 0x00
             console.logValue("ID2",rk)
             basic.pause(5000)
             tri_enable = true
