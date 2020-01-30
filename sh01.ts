@@ -64,11 +64,13 @@ namespace SH01 {
 
         if (rk & 0x01) {
             // Triangle
-            /*let main_reg: number = getreg(0x00)
-            setreg(REG_MainControl, main_reg & ~0x01)*/
-            pass++
-            if (pass == 1)
-                tri_enable = true
+            while (getreg(REG_InputStatus) & 0x01)
+            {
+                pass++;
+            }
+            let main_reg: number = getreg(0x00)
+            setreg(REG_MainControl, main_reg & ~0x01)
+            tri_enable = true
         } else if (rk & 0x20) {
             // Circle
             let main_reg: number = getreg(0x00)
