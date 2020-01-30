@@ -68,6 +68,8 @@ namespace SH01 {
             console.logValue("ID2",rk)
             let main_reg: number = getreg(0x00)
             setreg(REG_MainControl, main_reg & ~0x01)
+            main_reg = getreg(0x00)
+            setreg(REG_MainControl, main_reg & ~0x01)
             basic.pause(5000)
             tri_enable = true
         } else if (rk & 0x20) {
