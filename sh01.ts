@@ -41,7 +41,6 @@ namespace SH01 {
     export function poll_sh01(): void {
 
         rk = getreg(REG_InputStatus)
-        console.logValue("ID", rk)
 
         if (rk & 0x01) {
             // Triangle
