@@ -60,18 +60,18 @@ namespace SH01 {
     export function poll_sh01(): void {
 
         rk = getreg(REG_InputStatus)
-        console.logValue("ID", getreg(REG_InputStatus))
-        console.logValue("ID", getreg(REG_InputStatus))
-        console.logValue("ID", getreg(REG_InputStatus))
-        console.logValue("ID", getreg(REG_InputStatus))
+        console.logValue("ID", rk)
 
         if (rk & 0x01) {
             // Triangle
             console.logValue("ID2",rk)
-            let main_reg: number = getreg(0x00)
-            setreg(REG_MainControl, main_reg & ~0x01)
-            main_reg = getreg(0x00)
-            setreg(REG_MainControl, main_reg & ~0x01)
+            while (getreg(REG_InputStatus) != 0x00)
+            {
+                let main_reg: number = getreg(0x00)
+                setreg(REG_MainControl, main_reg & ~0x01)
+                console.logValue("rk", getreg(REG_InputStatus))
+                basic.pause(1000)
+            }
             basic.pause(5000)
             tri_enable = true
         } else if (rk & 0x20) {
