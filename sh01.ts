@@ -34,6 +34,9 @@ namespace SH01 {
     const REG_InputStatus = 3
     const _interval = 100
     let tri_enable: boolean = false
+    let sqr_enable: boolean = false
+    let crcl_enable: boolean = false
+    let no_enable: boolean = false
     let pass: number = 0
 
     let KeyPressed: boolean[] = [false, false, false, false, false, false, false, false]
@@ -64,7 +67,6 @@ namespace SH01 {
 
         if (rk & 0x01) {
             // Triangle
-            console.logValue("ID2",rk)
             while (getreg(REG_InputStatus) != 0x00)
             {
                 let main_reg: number = getreg(0x00)
@@ -74,16 +76,28 @@ namespace SH01 {
             tri_enable = true
         } else if (rk & 0x20) {
             // Circle
-            let main_reg: number = getreg(0x00)
-            setreg(REG_MainControl, main_reg & ~0x01)
+            while (getreg(REG_InputStatus) != 0x00) {
+                let main_reg: number = getreg(0x00)
+                setreg(REG_MainControl, main_reg & ~0x01)
+                console.logValue("rk", getreg(REG_InputStatus))
+            }
+            crcl_enable = true
         } else if (rk & 0x10) {
             // Square
-            let main_reg: number = getreg(0x00)
-            setreg(REG_MainControl, main_reg & ~0x01)
+            while (getreg(REG_InputStatus) != 0x00) {
+                let main_reg: number = getreg(0x00)
+                setreg(REG_MainControl, main_reg & ~0x01)
+                console.logValue("rk", getreg(REG_InputStatus))
+            }
+            sqr_enable = true
         } else if (rk & 0x08) {
             // Cross
-            let main_reg: number = getreg(0x00)
-            setreg(REG_MainControl, main_reg & ~0x01)
+            while (getreg(REG_InputStatus) != 0x00) {
+                let main_reg: number = getreg(0x00)
+                setreg(REG_MainControl, main_reg & ~0x01)
+                console.logValue("rk", getreg(REG_InputStatus))
+            }
+            no_enable = true
         }
 
     }
@@ -104,6 +118,60 @@ namespace SH01 {
         }
 
         return tri_press
+    }
+
+    /**
+    * Square pressed
+    */
+    //% block="SH01 is square pressed"
+    export function sqr_pressed(): boolean {
+        let sqr_press: boolean = false
+
+        if (sqr_enable) {
+            sqr_press = true
+            sqr_enable = false
+        }
+        else {
+            sqr_press = false
+        }
+
+        return sqr_press
+    }
+
+    /**
+    * Circle pressed
+    */
+    //% block="SH01 is circle pressed"
+    export function crcl_pressed(): boolean {
+        let crcl_press: boolean = false
+
+        if (crcl_enable) {
+            crcl_press = true
+            crcl_enable = false
+        }
+        else {
+            crcl_press = false
+        }
+
+        return crcl_press
+    }
+
+    /**
+    * Cross pressed
+    */
+    //% block="SH01 is circle pressed"
+    export function cross_pressed(): boolean {
+        let no_press: boolean = false
+
+        if (no_enable) {
+            no_press = true
+            no_enable = false
+        }
+        else {
+            no_press = false
+        }
+
+        return no_press
     }
 
     /**
