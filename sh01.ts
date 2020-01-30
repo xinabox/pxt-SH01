@@ -66,7 +66,7 @@ namespace SH01 {
             // Triangle
             while (getreg(REG_InputStatus) & 0x01)
             {
-                pass++;
+                basic.pause(100)
             }
             let main_reg: number = getreg(0x00)
             setreg(REG_MainControl, main_reg & ~0x01)
