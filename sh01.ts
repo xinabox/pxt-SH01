@@ -34,6 +34,7 @@ namespace SH01 {
     const REG_InputStatus = 3
     const _interval = 100
     let tri_enable: boolean = false
+    let pass: number = 0
 
     let KeyPressed: boolean[] = [false, false, false, false, false, false, false, false]
     let KeyReleased: boolean[] = [true, true, true, true, true, true, true, true]
@@ -57,7 +58,6 @@ namespace SH01 {
      */
     //% block="SH01 poll"
     export function poll_sh01(): void {
-        let pass: number = 0
         rk = getreg(REG_InputStatus)
 
         console.logValue("ID", rk)
@@ -66,6 +66,7 @@ namespace SH01 {
             // Triangle
             let main_reg: number = getreg(0x00)
             setreg(REG_MainControl, main_reg & ~0x01)
+            pass++
             tri_enable = true
         } else if (rk & 0x20) {
             // Circle
@@ -80,6 +81,8 @@ namespace SH01 {
             let main_reg: number = getreg(0x00)
             setreg(REG_MainControl, main_reg & ~0x01)
         }
+
+        console.logValue("pass",pass)
 
     }
 
