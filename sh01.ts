@@ -57,12 +57,16 @@ namespace SH01 {
      */
     //% block="SH01 poll"
     export function poll_sh01(): void {
+        let pass: number = 0
         rk = getreg(REG_InputStatus)
 
         console.logValue("ID", rk)
 
         if (rk & 0x01) {
             // Triangle
+            while (getreg(REG_InputStatus) & 0x01) {
+                pass++
+            }
             let main_reg: number = getreg(0x00)
             setreg(REG_MainControl, main_reg & ~0x01)
             tri_enable = true
@@ -86,18 +90,17 @@ namespace SH01 {
      * Triangle pressed
      */
     //% block="SH01 is triangle pressed"
-    export function tri_pressed():boolean{
+    export function tri_pressed(): boolean {
         let tri_press: boolean = false
 
-        if(tri_enable)
-        {
+        if (tri_enable) {
             tri_press = true
             tri_enable = false
         }
-        else{
+        else {
             tri_press = false
         }
-        
+
         return tri_press
     }
 
