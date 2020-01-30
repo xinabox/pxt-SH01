@@ -1,14 +1,15 @@
-SH01.onKeyPressed(SH01_KEY.KEY_UP, function () {
-    basic.showIcon(IconNames.Heart)
-    basic.showIcon(IconNames.SmallHeart)
-})
-SH01.onKeyReleased(SH01_KEY.KEY_LEFT, function () {
-    basic.showIcon(IconNames.Yes)
-    basic.showIcon(IconNames.No)
-})
 basic.forever(function () {
-    if (SH01.read() == SH01.KEY_CIRCLE()) {
-        basic.showIcon(IconNames.Square)
-        basic.showIcon(IconNames.SmallSquare)
+    SH01.poll_sh01()
+    if (SH01.tri_pressed()) {
+        basic.showString("Trangle!")
+    }
+    if (SH01.sqr_pressed()) {
+        basic.showString("Square!")
+    }
+    if (SH01.crcl_pressed()) {
+        basic.showString("Circle!")
+    }
+    if (SH01.cross_pressed()) {
+        basic.showString("Cross!")
     }
 })
