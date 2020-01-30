@@ -64,8 +64,8 @@ namespace SH01 {
 
         if (rk & 0x01) {
             // Triangle
-            let main_reg: number = getreg(0x00)
-            setreg(REG_MainControl, main_reg & ~0x01)
+            /*let main_reg: number = getreg(0x00)
+            setreg(REG_MainControl, main_reg & ~0x01)*/
             pass++
             if (pass == 1)
                 tri_enable = true
