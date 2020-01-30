@@ -48,7 +48,6 @@ namespace SH01 {
             {
                 let main_reg: number = getreg(0x00)
                 setreg(REG_MainControl, main_reg & ~0x01)
-                console.logValue("rk", getreg(REG_InputStatus))
             }
             tri_enable = true
         } else if (rk & 0x20) {
@@ -56,7 +55,6 @@ namespace SH01 {
             while (getreg(REG_InputStatus) != 0x00) {
                 let main_reg: number = getreg(0x00)
                 setreg(REG_MainControl, main_reg & ~0x01)
-                console.logValue("rk", getreg(REG_InputStatus))
             }
             crcl_enable = true
         } else if (rk & 0x10) {
@@ -64,7 +62,6 @@ namespace SH01 {
             while (getreg(REG_InputStatus) != 0x00) {
                 let main_reg: number = getreg(0x00)
                 setreg(REG_MainControl, main_reg & ~0x01)
-                console.logValue("rk", getreg(REG_InputStatus))
             }
             sqr_enable = true
         } else if (rk & 0x08) {
@@ -72,7 +69,6 @@ namespace SH01 {
             while (getreg(REG_InputStatus) != 0x00) {
                 let main_reg: number = getreg(0x00)
                 setreg(REG_MainControl, main_reg & ~0x01)
-                console.logValue("rk", getreg(REG_InputStatus))
             }
             no_enable = true
         }
