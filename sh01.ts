@@ -58,18 +58,16 @@ namespace SH01 {
      */
     //% block="SH01 poll"
     export function poll_sh01(): void {
-        if(rk == 0x00)
-        {
-            rk = getreg(REG_InputStatus)
-        }else{
-            let main_reg: number = getreg(0x00)
-            setreg(REG_MainControl, main_reg & ~0x01)
-        }
+
+        rk = getreg(REG_InputStatus)
+        rk = getreg(REG_InputStatus)
         console.logValue("ID", rk)
 
         if (rk & 0x01) {
             // Triangle
             console.logValue("ID2",rk)
+            let main_reg: number = getreg(0x00)
+            setreg(REG_MainControl, main_reg & ~0x01)
             basic.pause(5000)
             tri_enable = true
         } else if (rk & 0x20) {
