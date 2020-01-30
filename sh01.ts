@@ -2,25 +2,6 @@
  * XinaBox SH01 extension for makecode
  */
 
-enum SH01_KEY {
-    //% block="UP"
-    KEY_UP = 1,
-    //% block="DOWN"
-    KEY_DOWN = 8,
-    //% block="LEFT"
-    KEY_LEFT = 16,
-    //% block="RIGHT"
-    KEY_RIGHT = 32,
-    //% block="TRIANGLE"
-    KEY_TRIANGLE = 1,
-    //% block="NO"
-    KEY_NO = 8,
-    //% block="SQUARE"
-    KEY_SQUARE = 16,
-    //% block="CIRCLE"
-    KEY_CIRCLE = 32,
-}
-
 /**
  * SH01 block
  */
@@ -37,10 +18,7 @@ namespace SH01 {
     let sqr_enable: boolean = false
     let crcl_enable: boolean = false
     let no_enable: boolean = false
-    let pass: number = 0
 
-    let KeyPressed: boolean[] = [false, false, false, false, false, false, false, false]
-    let KeyReleased: boolean[] = [true, true, true, true, true, true, true, true]
     //let buf = pins.createBuffer(2)
     let rk: number = 0
 
