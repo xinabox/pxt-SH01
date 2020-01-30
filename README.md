@@ -6,10 +6,6 @@ XinaBox SH01 extension for makecode.
   
 ![](sh01.jpg)
 
-## Demo
-
-![](test.jpg)
-
 ## License
 
 MIT

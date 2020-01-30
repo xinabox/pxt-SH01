@@ -1,6 +1,6 @@
 {
     "name": "SH01",
-    "version": "1.0.10",
+    "version": "1.0.60",
     "description": "XinaBox SH01 Capacitive Touch sensor: 4 button",
     "authors": [
         "Bjarke Gotfredsen",
@@ -19,5 +19,5 @@
         "test.ts"
     ],
     "public": true,
-	"preferredEditor": "blocksprj"
+    "preferredEditor": "tsprj"
 }
