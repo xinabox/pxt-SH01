@@ -60,14 +60,15 @@ namespace SH01 {
     export function poll_sh01(): void {
         rk = getreg(REG_InputStatus)
 
-        console.logValue("ID", rk)
+        console.logValue("ID", rk & 0x01)
 
         if (rk & 0x01) {
             // Triangle
             let main_reg: number = getreg(0x00)
             setreg(REG_MainControl, main_reg & ~0x01)
             pass++
-            tri_enable = true
+            if (pass == 1)
+                tri_enable = true
         } else if (rk & 0x20) {
             // Circle
             let main_reg: number = getreg(0x00)
@@ -82,7 +83,7 @@ namespace SH01 {
             setreg(REG_MainControl, main_reg & ~0x01)
         }
 
-        console.logValue("pass",pass)
+        console.logValue("pass", pass)
 
     }
 
