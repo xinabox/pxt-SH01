@@ -66,7 +66,7 @@ namespace SH01 {
             // Triangle
             let main_reg: number = getreg(0x00)
             setreg(REG_MainControl, main_reg & ~0x01)
-            basic.pause(200)
+            basic.pause(500)
             tri_enable = true
         } else if (rk & 0x20) {
             // Circle
