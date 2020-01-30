@@ -159,7 +159,7 @@ namespace SH01 {
     /**
     * Cross pressed
     */
-    //% block="SH01 is circle pressed"
+    //% block="SH01 is cross pressed"
     export function cross_pressed(): boolean {
         let no_press: boolean = false
 
