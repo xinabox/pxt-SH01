@@ -50,7 +50,7 @@ namespace SH01 {
 
     // read touch key interval
     function _readkey(): void {
-        control.inBackground(function () {
+        startParallel(function () {
             while (true) {
                 rk = getreg(REG_InputStatus)
                 if (rk > 0) {
@@ -66,7 +66,7 @@ namespace SH01 {
      */
     //% block="on %key Key Pressed"
     export function onKeyPressed(key: SH01_KEY, body: () => void): void {
-        control.inBackground(function () {
+        startParallel(function () {
             while (true) {
                 if (rk <= 32) {
                     if (rk == key) {
