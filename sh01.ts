@@ -113,11 +113,10 @@ namespace SH01 {
         return rk == key
     }
 
-	//% shim=parall::startParallel
-	export function startParallel(u: () => void)
-	{
-	return 1;
-	}
+    //% shim=parall::startParallel
+    export function startParallel(u: () => void) {
+        return 1;
+    }
 
     _readkey()
 }
