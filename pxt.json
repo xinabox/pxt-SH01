@@ -13,8 +13,8 @@
     "files": [
         "README.md",
         "sh01.ts",
-		"parallel.h",
-		"parallel.cpp",
+	"parallel.h",
+	"parallel.cpp",
         "_locales/zh/SH01-strings.json"
     ],
     "testFiles": [
