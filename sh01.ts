@@ -24,11 +24,9 @@ enum SH01_KEY {
 /**
  * SH01 block
  */
-//% weight=100 color=#444444 icon="\uf0a7" block="SH01"
+//% weight=100 color=#70c0f0 icon="\uf0a7" block="SH01"
 namespace SH01 {
 
-    const keyPressEventID = 3101;
-    const keyReleaseEventID = 3101;
     const CAP1296_I2C_ADDRESS = 40
     const REG_MainControl = 0
     const REG_InputStatus = 3
@@ -36,14 +34,13 @@ namespace SH01 {
 
     let KeyPressed: boolean[] = [false, false, false, false, false, false, false, false]
     let KeyReleased: boolean[] = [true, true, true, true, true, true, true, true]
-    //let buf = pins.createBuffer(2)
+    let buf = pins.createBuffer(2)
     let rk: number = 0
 
     function setreg(reg: number, dat: number): void {
-        //buf[0] = reg;
-        //buf[1] = dat;
-        //pins.i2cWriteBuffer(CAP1296_I2C_ADDRESS, buf);
-        pins.i2cWriteNumber(CAP1296_I2C_ADDRESS, (reg<<8)+dat, NumberFormat.UInt16BE);
+        buf[0] = reg;
+        buf[1] = dat;
+        pins.i2cWriteBuffer(CAP1296_I2C_ADDRESS, buf);
     }
 
     function getreg(reg: number): number {
@@ -51,58 +48,31 @@ namespace SH01 {
         return pins.i2cReadNumber(CAP1296_I2C_ADDRESS, NumberFormat.UInt8BE);
     }
 
-    /**
-     * Poll SH01
-     */
-    //% block="SH01 poll"
-    function poll_sh01(): void {
-        rk = getreg(REG_InputStatus)
-
-        if(rk == 0x01)
-        {
-            // Triangle
-
-        }else if(rk == 0x20)
-        {
-            // Circle
-
-        }else if(rk == 0x10){
-            // Square
-
-        }else if(rk == 0x08)
-        {
-            // Cross
-        }
+    // read touch key interval
+    function _readkey(): void {
+        control.inBackground(function () {
+            while (true) {
+                rk = getreg(REG_InputStatus)
+                if (rk > 0) {
+                    setreg(REG_MainControl, 0)
+                }
+                basic.pause(_interval)
+            }
+        })
     }
 
     /**
      * Key Pressed Event
      */
-    //% block="SH01 on %key Key Pressed"
+    //% block="on %key Key Pressed"
     export function onKeyPressed(key: SH01_KEY, body: () => void): void {
-        /*
-        startParallel(function () {
+        control.inBackground(function () {
             while (true) {
                 if (rk <= 32) {
                     if (rk == key) {
                         if (KeyPressed[key >> 3] == false) {
                             KeyPressed[key >> 3] = true
                             body()
-                        }
-                    } 
-                    else KeyPressed[key >> 3] = false
-                }
-                basic.pause(_interval)
-            }
-        }) */
-        control.onEvent(keyPressEventID, key,body);
-        startParallel(function () {
-            while (true) {
-                if (rk <= 32) {
-                    if (rk == key) {
-                        if (KeyPressed[key >> 3] == false) {
-                            KeyPressed[key >> 3] = true
-                            control.raiseEvent(keyPressEventID,key);
                         }
                     }
                     else KeyPressed[key >> 3] = false
@@ -115,9 +85,8 @@ namespace SH01 {
     /**
      * Key Released Event
      */
-    //% block="SH01 on %key Key Released"
+    //% block="on %key Key Released"
     export function onKeyReleased(key: SH01_KEY, body: () => void): void {
-        /*
         startParallel(function () {
             while (true) {
                 if (rk <= 32) {
@@ -133,37 +102,21 @@ namespace SH01 {
                 }
                 basic.pause(_interval)
             }
-        }) */
-        control.onEvent(keyReleaseEventID,key,body);
-        startParallel(() => {
-            while (true) {
-                if (rk <= 32) {
-                    if (rk == key) {
-                        KeyReleased[key >> 3] = false
-                    }
-                    else {
-                        if (KeyReleased[key >> 3] == false) {
-                            KeyReleased[key >> 3] = true
-                            control.raiseEvent(keyReleaseEventID,key);
-                        }
-                    }
-                }
-                basic.pause(_interval)
-            }
         })
     }
 
     /**
      * If one key has been pressed.
      */
-    //% block="SH01 %key has been pressed"
+    //% block="%key has been pressed"
     export function keypressed(key: SH01_KEY): boolean {
         return rk == key
     }
-	
-	//% shim=parallel_run::startParallel
-	function startParallel(u: () => void)
-	{
-		return 1;
-	}
+
+    //% shim=parallel_run::startParallel
+    function startParallel(u: () => void) {
+        return 1;
+    }
+
+    _readkey()
 }
