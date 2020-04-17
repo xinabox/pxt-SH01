@@ -7,9 +7,9 @@
 #include "pxt.h"
 
 
-class Test
+class ParallelRun
 {
 	public:
-		Test();
+		ParallelRun();
 		int playParallel(pxt::Action);
 };

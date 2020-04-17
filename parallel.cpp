@@ -1,6 +1,6 @@
 #include "parallel.h"
 
-Test::Test()
+ParallelRun::ParallelRun()
 {
 
 }
@@ -18,7 +18,7 @@ return 1;
 
 namespace parall
 {
-	static Test* xTest =  new Test();
+	static ParallelRun* xParallelRun =  new ParallelRun();
 	
 	//%
 	int startParallel(Action a)
