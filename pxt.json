@@ -2,10 +2,6 @@
     "name": "SH01",
     "version": "1.0.66",
     "description": "XinaBox SH01 Capacitive Touch sensor: 4 button",
-    "authors": [
-        "Bjarke Gotfredsen",
-        "Shao Ziyang"
-    ],
     "license": "MIT",
     "dependencies": {
         "core": "*"
@@ -21,5 +17,12 @@
         "test.ts"
     ],
     "public": true,
-    "preferredEditor": "tsprj"
+    "supportedTargets": [
+        "microbit"
+    ],
+    "preferredEditor": "tsprj",
+    "authors": [
+        "Bjarke Gotfredsen",
+        "Shao Ziyang"
+    ]
 }
